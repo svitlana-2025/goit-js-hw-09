@@ -1,44 +1,37 @@
-const inputForm = document.querySelector('.feedback-form');
+const form = document.querySelector("form");//import refs
+const localStorageKey = "feedback-form-state";//import KEY
 
-const fillFormInput = () => {
-  try {
-    const userDataEl = JSON.parse(localStorage.getItem('feedback-form-state'));
-    if (userDataEl === null) {
-      return;
+const data = JSON.parse(localStorage.getItem(localStorageKey)) ?? {};//import localStorage.getItem
+
+
+form.elements.email.value = data.email ? data.email.trim() : "";
+form.elements.message.value = data.message ? data.message.trim() : "";
+
+
+
+form.addEventListener("input", handleInput);
+function handleInput(event) {
+
+    data.email = event.currentTarget.elements.email.value.trim();
+    data.message = event.currentTarget.elements.message.value.trim();
+    localStorage.setItem(localStorageKey, JSON.stringify(data));//import localStorage
+   
+}
+
+form.addEventListener("submit", handleSubmit);
+function handleSubmit(event) {
+    
+    event.preventDefault();
+    const messageField = event.currentTarget.elements.message.value.trim();
+    const emailField = event.currentTarget.elements.email.value.trim();
+
+    if (!(messageField && emailField)) {
+        alert("Fill all fields!")
+        return
+     
     }
+    console.log(data);
+    localStorage.removeItem(localStorageKey);// import localStorage.removeItem
+    form.reset();
 
-    for (const key in userDataEl) {
-      inputForm.elements[key].value = userDataEl[key];
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-fillFormInput();
-
-const formFieldChange = event => {
-  const userData = {
-    email: inputForm.elements.email.value,
-    message: inputForm.elements.message.value,
-  };
-  localStorage.setItem('feedback-form-state', JSON.stringify(userData));
-};
-
-const submitForm = event => {
-  event.preventDefault();
-  const userData = {
-    email: inputForm.elements.email.value.trim(),
-    message: inputForm.elements.message.value.trim(),
-  };
-  if (!userData.email || !userData.message) {
-    alert('Заполните поля');
-    return;
-  }
-
-  console.log(userData);
-  inputForm.reset();
-  localStorage.removeItem('feedback-form-state');
-};
-inputForm.addEventListener('input', formFieldChange);
-inputForm.addEventListener('submit', submitForm);
+}
