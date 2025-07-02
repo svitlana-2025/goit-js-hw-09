@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-09</title>
+    <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,8 +14,20 @@
   </head>
   <body>
     <ul>
+      <li><a href="./index.html">Головна</a></li>
       <li><a href="./1-gallery.html">Галерея</a></li>
-      <li><a href="./2-form.html">Форма</a></li>
     </ul>
+    <form class="feedback-form" autocomplete="off">
+      <label>
+        Email
+        <input class="mail-input" type="email" name="email" autofocus />
+      </label>
+      <label>
+        Message
+        <textarea class="message-input" name="message" rows="8"></textarea>
+      </label>
+      <button class="sub-btn" type="submit">Submit</button>
+    </form>
+    <script type="module" src="./js/2-form.js"></script>
   </body>
 </html>
